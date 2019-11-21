@@ -28,7 +28,9 @@ JNIEXPORT jint JNICALL
 Java_com_example_stitch_MainActivity_bitmapFromJNI(
         JNIEnv *env,
         jobject /* thiz */,
-        jobject bitmap) {
+        jobject bitmap,
+        jstring appPath) {
+    return -1;
     // TODO: implement bitmapFromJNI()
 }
 
