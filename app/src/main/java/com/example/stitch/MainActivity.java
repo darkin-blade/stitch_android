@@ -2,7 +2,9 @@ package com.example.stitch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,9 +24,17 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(stringFromJNI());
     }
 
+    public void init() {
+        Bitmap bitmap = null;
+        bitmapFromJNI(bitmap);
+        ImageView imageView = findViewById(R.id.sample_img);
+    }
+
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
     public native String stringFromJNI();
+
+    public native int bitmapFromJNI(Object bitmap);
 }

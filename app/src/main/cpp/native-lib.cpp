@@ -5,7 +5,8 @@
 
 using namespace cv;
 
-extern "C" JNIEXPORT jstring JNICALL
+extern "C" {
+JNIEXPORT jstring JNICALL
 Java_com_example_stitch_MainActivity_stringFromJNI(
         JNIEnv *env,
         jobject /* this */) {
@@ -13,11 +14,22 @@ Java_com_example_stitch_MainActivity_stringFromJNI(
     std::string hello;
 
     if (true) {
-        hello = "Hello from OpenCV " + (std::string)CV_VERSION;
+        hello = "Hello from OpenCV " + (std::string) CV_VERSION;
     } else {
         hello = "Hello from C++";
     }
 
     return env->NewStringUTF(hello.c_str());
+
+}
+
+
+JNIEXPORT jint JNICALL
+Java_com_example_stitch_MainActivity_bitmapFromJNI(
+        JNIEnv *env,
+        jobject /* thiz */,
+        jobject bitmap) {
+    // TODO: implement bitmapFromJNI()
+}
 
 }
