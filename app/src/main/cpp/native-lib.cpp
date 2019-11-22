@@ -20,18 +20,23 @@ Java_com_example_stitch_MainActivity_stringFromJNI(
     }
 
     return env->NewStringUTF(hello.c_str());
+}
+
+JNIEXPORT jint JNICALL
+Java_com_example_stitch_MainActivity_changeImg(
+        JNIEnv *env,
+        jobject thiz,
+        jobject img_send) {
+    // TODO: implement changeImg()
 
 }
 
-
-JNIEXPORT jint JNICALL
-Java_com_example_stitch_MainActivity_bitmapFromJNI(
+JNIEXPORT void JNICALL
+Java_com_example_stitch_MainActivity_getImgSize(
         JNIEnv *env,
-        jobject /* thiz */,
-        jobject bitmap,
-        jstring appPath) {
-    return -1;
-    // TODO: implement bitmapFromJNI()
+        jobject thiz,
+        jstring img_path) {
+    // TODO: implement getImgSize()
 }
 
 }

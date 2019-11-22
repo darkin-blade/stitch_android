@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Size;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(stringFromJNI());
 
         Bitmap bitmap = null;
-        bitmapFromJNI(bitmap, appPath);
         ImageView imageView = findViewById(R.id.sample_img);
     }
 
@@ -59,5 +59,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public native String stringFromJNI();
 
-    public native int bitmapFromJNI(Object bitmap, String path);
+    public native int changeImg(Bitmap imgSend);
+
+    public native void getImgSize(String imgPath);
 }
