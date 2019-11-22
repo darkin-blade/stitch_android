@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Size;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,14 +55,18 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
 
-        // TODO 获取图片大小
+        // 获取图片大小
         ImgSize imgSize = new ImgSize(100, 101);
         getImgSize(appPath + "/img0.png", imgSize);
-
         infoLog("width: " + imgSize.width + ", height: " + imgSize.height);
 
-//        Bitmap bitmap = null;
-//        ImageView imageView = findViewById(R.id.sample_img);
+        // TODO 从jni获得图片
+        Bitmap bitmap = Bitmap.createBitmap(imgSize.width, imgSize.height, Bitmap.Config.ARGB_8888);
+        getImg(appPath + "/img0.png", bitmap);
+
+        // TODO 显示图片
+        ImageView imageView = findViewById(R.id.sample_img);
+        imageView.setImageBitmap(bitmap);
     }
 
     static public void infoLog(String log) {
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     // TODO native 方法
     public native String stringFromJNI();
 
-    public native int changeImg(Bitmap imgSend);
+    public native void getImg(String imgPath, Bitmap imgSend);
 
     public native void getImgSize(String imgPath, ImgSize imgSize);
 }
