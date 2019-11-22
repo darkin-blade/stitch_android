@@ -30,21 +30,33 @@ Java_com_example_stitch_MainActivity_changeImg(
         JNIEnv *env,
         jobject thiz,
         jobject img_send) {
+    return -1;
     // TODO: implement changeImg()
-
 }
 
 JNIEXPORT void JNICALL
 Java_com_example_stitch_MainActivity_getImgSize(
         JNIEnv *env,
         jobject thiz,
-        jstring img_path,
+        jstring imgPath,
         jobject img_size) {
+    // 获取路径
+    const char* img_path = env->GetStringUTFChars(imgPath, 0);
+    LOG("%s\n", img_path);
+
+    Mat img = imread(img_path);
+    int width = img.cols;// 宽
+    int height = img.rows;// 高
+
+    // 获取对象
     jclass tmp_class = env->GetObjectClass(img_size);
-    jfieldID id = env->GetFieldID(tmp_class, "width", "I");
-    jint width = env->GetIntField(img_size, id);
-    LOG("%ld\n", width);
-    // TODO: implement getImgSize()
+    jfieldID id;
+
+    // 设置宽高
+    id = env->GetFieldID(tmp_class, "width", "I");
+    env->SetIntField(img_size, id, width);
+    id = env->GetFieldID(tmp_class, "height", "I");
+    env->SetIntField(img_size, id, height);
 }
 
 }

@@ -3,12 +3,17 @@ package com.example.stitch;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Size;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.stitch.utils.ImgSize;
 
@@ -53,10 +58,24 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO 获取图片大小
         ImgSize imgSize = new ImgSize(100, 101);
-        getImgSize("", imgSize);
+        getImgSize(appPath + "/img0.png", imgSize);
+
+        infoLog("width: " + imgSize.width + ", height: " + imgSize.height);
 
 //        Bitmap bitmap = null;
 //        ImageView imageView = findViewById(R.id.sample_img);
+    }
+
+    static public void infoLog(String log) {
+        Log.i("fuck", log);
+    }
+
+    static public void infoToast(Context context, String log) {
+        Toast toast =  Toast.makeText(context, log, Toast.LENGTH_SHORT);
+        View view = toast.getView();
+        TextView textView = view.findViewById(android.R.id.message);
+        textView.setTextColor(Color.rgb(0x00, 0x00, 0x00));
+        toast.show();
     }
 
     // TODO native 方法
