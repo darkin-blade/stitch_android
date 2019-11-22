@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO
     static {
-        System.loadLibrary("native-lib");
+        System.loadLibrary("native-lib");// TODO
     }
 
     @Override
@@ -87,4 +87,6 @@ public class MainActivity extends AppCompatActivity {
     public native void path2Bmp(String imgPath, Bitmap imgSend);
 
     public native void path2Size(String imgPath, ImgSize imgSize);
+
+    public native void mainTest(String img1, String img2);// TODO 参数
 }
