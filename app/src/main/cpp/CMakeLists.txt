@@ -61,6 +61,8 @@ target_link_libraries( # Specifies the target library.
 
         # opencv库定义的
         fuck
+        # TODO 解决 AndroidBitmap 报错
+        jnigraphics
 
         # Links the target library to the log library
         # included in the NDK.
