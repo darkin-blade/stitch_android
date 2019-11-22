@@ -3,6 +3,9 @@
 
 #include <jni.h>
 
+#include <string.h>
+
+#include <iostream>
 #include <vector>
 
 #include <opencv2/opencv.hpp>
@@ -17,10 +20,19 @@ using namespace cv::detail;
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_stitch_MainActivity_mainTest(JNIEnv *env, jobject thiz, jstring img) {
-    char tmp_name[32];// 临时文件名
+Java_com_example_stitch_MainActivity_findPoint(
+        JNIEnv *env,
+        jobject thiz,
+        jstring img1,
+        jstring img2) {
     const int img_num = 2;
-    const char *img_name[img_num] = {"mac1.jpg", "mac2.jpg"};
+    char tmp_name[32];// TODO 临时文件名
+    char img_name[img_num][64];
+
+    // 获取路径
+    sprintf(img_name[0], "%s", env->GetStringUTFChars(img1, 0));
+    sprintf(img_name[1], "%s", env->GetStringUTFChars(img2, 0));
+    LOG("img1: %s, img2: %s", img_name[0], img_name[1]);
 
     Ptr<Feature2D> finder;
     if (true) {

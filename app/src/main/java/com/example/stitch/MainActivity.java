@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
         // 初始化路径字符串
         appPath = getExternalFilesDir("").getAbsolutePath();
 
+        midTest();
+    }
+
+    public void simpleTest() {
         // 字符串测试
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
@@ -67,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         // TODO 显示图片
         ImageView imageView = findViewById(R.id.sample_img);
         imageView.setImageBitmap(bitmap);
+    }
+
+    public void midTest() {
     }
 
     static public void infoLog(String log) {
@@ -88,5 +95,5 @@ public class MainActivity extends AppCompatActivity {
 
     public native void path2Size(String imgPath, ImgSize imgSize);
 
-    public native void mainTest(String img1, String img2);// TODO 参数
+    public native void findPoint(String img1, String img2);// 查找特征点 TODO 参数
 }
