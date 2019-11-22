@@ -57,12 +57,12 @@ public class MainActivity extends AppCompatActivity {
 
         // 获取图片大小
         ImgSize imgSize = new ImgSize(100, 101);
-        getImgSize(appPath + "/img0.png", imgSize);
+        path2Size(appPath + "/img0.png", imgSize);
         infoLog("width: " + imgSize.width + ", height: " + imgSize.height);
 
         // TODO 从jni获得图片
         Bitmap bitmap = Bitmap.createBitmap(imgSize.width, imgSize.height, Bitmap.Config.ARGB_8888);
-        getImg(appPath + "/img0.png", bitmap);
+        path2Bmp(appPath + "/img0.png", bitmap);
 
         // TODO 显示图片
         ImageView imageView = findViewById(R.id.sample_img);
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     // TODO native 方法
     public native String stringFromJNI();
 
-    public native void getImg(String imgPath, Bitmap imgSend);
+    public native void path2Bmp(String imgPath, Bitmap imgSend);
 
-    public native void getImgSize(String imgPath, ImgSize imgSize);
+    public native void path2Size(String imgPath, ImgSize imgSize);
 }
