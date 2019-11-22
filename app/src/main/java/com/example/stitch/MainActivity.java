@@ -10,6 +10,8 @@ import android.util.Size;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.stitch.utils.ImgSize;
+
 public class MainActivity extends AppCompatActivity {
     static public int window_num;
     static public String appPath = null;// app路径
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     static public final int SAVE_IMG = 4;// 保存合并的图片到本地
 
 
-    // Used to load the 'native-lib' library on application startup.
+    // TODO
     static {
         System.loadLibrary("native-lib");
     }
@@ -45,21 +47,22 @@ public class MainActivity extends AppCompatActivity {
         // 初始化路径字符串
         appPath = getExternalFilesDir("").getAbsolutePath();
 
-        // Example of a call to a native method
+        // 字符串测试
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
 
-        Bitmap bitmap = null;
-        ImageView imageView = findViewById(R.id.sample_img);
+        // TODO 获取图片大小
+        ImgSize imgSize = new ImgSize(100, 101);
+        getImgSize("", imgSize);
+
+//        Bitmap bitmap = null;
+//        ImageView imageView = findViewById(R.id.sample_img);
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
+    // TODO native 方法
     public native String stringFromJNI();
 
     public native int changeImg(Bitmap imgSend);
 
-    public native void getImgSize(String imgPath);
+    public native void getImgSize(String imgPath, ImgSize imgSize);
 }

@@ -1,7 +1,10 @@
 #include <jni.h>
+#include <android/log.h>
 #include <string>
 #include <iostream>
 #include <opencv2/opencv.hpp>
+
+#define LOG(format, ...) __android_log_print(ANDROID_LOG_INFO, "fuck", "[%s] " format, __func__, __VA_ARGS__)
 
 using namespace cv;
 
@@ -35,7 +38,12 @@ JNIEXPORT void JNICALL
 Java_com_example_stitch_MainActivity_getImgSize(
         JNIEnv *env,
         jobject thiz,
-        jstring img_path) {
+        jstring img_path,
+        jobject img_size) {
+    jclass tmp_class = env->GetObjectClass(img_size);
+    jfieldID id = env->GetFieldID(tmp_class, "width", "I");
+    jint width = env->GetIntField(img_size, id);
+    LOG("%ld\n", width);
     // TODO: implement getImgSize()
 }
 
