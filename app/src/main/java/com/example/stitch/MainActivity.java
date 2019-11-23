@@ -14,13 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.stitch.utils.ImgSize;
-
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     static public int window_num;
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         // 初始化路径字符串
         appPath = getExternalFilesDir("").getAbsolutePath();
 
-        midTest();
+        simpleTest();
     }
 
     public void simpleTest() {
@@ -75,18 +74,14 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
 
-        // 获取图片大小
-        ImgSize imgSize = new ImgSize(100, 101);
-//        path2Size(appPath + "/img0.png", imgSize);
-        infoLog("width: " + imgSize.width + ", height: " + imgSize.height);
+        int tmp = 10;
+        String[] imgPaths = new String[tmp];
+        for (int i = 0; i < tmp; i ++) {
+            imgPaths[i] = "fuck[" + i + "]";
+        }
 
-        // TODO 从jni获得图片
-        Bitmap bitmap = Bitmap.createBitmap(imgSize.width, imgSize.height, Bitmap.Config.ARGB_8888);
-        path2Bmp(appPath + "/img0.png", bitmap);
-
-        // TODO 显示图片
-        ImageView imageView = findViewById(R.id.sample_img);
-        imageView.setImageBitmap(bitmap);
+        // TODO 测试
+        sendString(imgPaths);
     }
 
     public void midTest() {
@@ -126,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
     public native void path2Bmp(String imgPath, Bitmap imgSend);
 
-    public native void path2Size(String imgPath, ImgSize imgSize);
+    public native void sendString(String[] imgPaths);
 
     public native void findPoint(String imgPath, long result);// 查找特征点 TODO 参数
 }

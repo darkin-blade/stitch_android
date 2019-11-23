@@ -87,29 +87,19 @@ Java_com_example_stitch_MainActivity_path2Bmp(
 }
 
 JNIEXPORT void JNICALL
-Java_com_example_stitch_MainActivity_path2Size(
+Java_com_example_stitch_MainActivity_sendString(
         JNIEnv *env,
         jobject thiz,
-        jstring imgPath,
-        jobject img_size) {
-    // 获得图片尺寸
-    // 获取路径
-    const char* img_path = env->GetStringUTFChars(imgPath, 0);
-    LOG("%s\n", img_path);
+        jobjectArray imgPaths) {
+    // 获取String数组长度
+    jsize str_len = env->GetArrayLength(imgPaths);
 
-    Mat img = imread(img_path);
-    int width = img.cols;// 宽
-    int height = img.rows;// 高
+    for (int i = 0; i < str_len; i ++) {
+        jstring tmp = (jstring) env->GetObjectArrayElement(imgPaths, i);
+        const char *img_path = env->GetStringUTFChars(tmp, 0);
 
-    // 获取对象
-    jclass tmp_class = env->GetObjectClass(img_size);
-    jfieldID id;
-
-    // 设置宽高
-    id = env->GetFieldID(tmp_class, "width", "I");
-    env->SetIntField(img_size, id, width);
-    id = env->GetFieldID(tmp_class, "height", "I");
-    env->SetIntField(img_size, id, height);
+        LOG("img[%d]: %s", i, img_path);
+    }
 }
 
 }
