@@ -16,8 +16,6 @@ using namespace std;
 using namespace cv;
 using namespace cv::detail;
 
-
-
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_stitch_MainActivity_findPoint(
@@ -33,16 +31,18 @@ Java_com_example_stitch_MainActivity_findPoint(
 
     // 查找特征点
     Ptr<Feature2D> finder;
-    vector<KeyPoint> keyPoints;
+    vector<ImageFeatures> features(1);
     if (true) {
         finder = ORB::create();
     } else {
         finder = AKAZE::create();
     }
-    finder->detect(img, keyPoints);
+    finder->detectAndCompute(img, noArray(), features[0].keypoints, features[0].descriptors);
 
     // 绘制特征点
-    Mat *imgKeyPoint = (Mat *)result;
-    drawKeypoints(img, keyPoints, *imgKeyPoint, Scalar::all(-1), DrawMatchesFlags::DEFAULT);
+    if (true) {
+        Mat *imgKeyPoint = (Mat *)result;
+        drawKeypoints(img, features[0].keypoints, *imgKeyPoint, Scalar::all(-1), DrawMatchesFlags::DEFAULT);
+    }
 
 }

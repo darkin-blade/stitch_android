@@ -11,6 +11,7 @@
 #define LOG(format, ...) __android_log_print(ANDROID_LOG_INFO, "fuck", "[%s] " format, __func__, ## __VA_ARGS__)
 
 using namespace cv;
+using namespace detail;
 
 void mat2bmp(Mat src, jobject dest, JNIEnv *env) {
     AndroidBitmapInfo info;
