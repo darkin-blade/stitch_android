@@ -19,11 +19,12 @@ using namespace cv::detail;
 
 
 extern "C"
-JNIEXPORT Mat JNICALL
+JNIEXPORT void JNICALL
 Java_com_example_stitch_MainActivity_findPoint(
         JNIEnv *env,
         jobject thiz,
-        jstring imgPath) {
+        jstring imgPath,
+        jlong result) {
     char img_name[64];
 
     // 获取路径
@@ -44,9 +45,7 @@ Java_com_example_stitch_MainActivity_findPoint(
     finder->detect(img, keyPoints);
 
     // 绘制特征点
-    Mat imgKeyPoint;
-    drawKeypoints(img, keyPoints, imgKeyPoint, Scalar::all(-1), DrawMatchesFlags::DEFAULT);
-
-    return imgKeyPoint;
+    Mat *imgKeyPoint = (Mat *)result;
+    drawKeypoints(img, keyPoints, *imgKeyPoint, Scalar::all(-1), DrawMatchesFlags::DEFAULT);
 
 }

@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void midTest() {
         // 读取图片
+        Mat imgKeyPoint = new Mat();
+        findPoint(appPath + "/img0.png", imgKeyPoint.getNativeObjAddr());
 //        Mat matBGR = Imgcodecs.imread(appPath + "/img0.png");
 //
 //        // BGR转RGB
@@ -96,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
 //        Utils.matToBitmap(matRGB, bitmap);
 
         // TODO 获取特征点
-        Mat imgKeyPoint = findPoint(appPath + "/img0.png");
 
         // TODO 显示图片
         ImageView imageView = findViewById(R.id.sample_img);
@@ -121,5 +122,5 @@ public class MainActivity extends AppCompatActivity {
 
     public native void path2Size(String imgPath, ImgSize imgSize);
 
-    public native Mat findPoint(String imgPath);// 查找特征点 TODO 参数
+    public native void findPoint(String imgPath, long result);// 查找特征点 TODO 参数
 }
