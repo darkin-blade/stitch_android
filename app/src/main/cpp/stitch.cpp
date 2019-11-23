@@ -30,6 +30,7 @@ Java_com_example_stitch_MainActivity_findPoint(
     // 获取路径
     sprintf(img_name, "%s", env->GetStringUTFChars(imgPath, 0));
     LOG("img name: %s", img_name);
+    return;// TODO
 
     // 读取图片
     Mat img = imread(img_name);
