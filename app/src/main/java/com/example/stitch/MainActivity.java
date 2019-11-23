@@ -87,15 +87,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void midTest() {
         // 读取图片
-        Mat matBGR = Imgcodecs.imread(appPath + "/img0.png");
-
-        // BGR转RGB
-        Mat matRGB = new Mat();
-        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
-        Bitmap bitmap = Bitmap.createBitmap(matRGB.cols(), matRGB.rows(), Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(matRGB, bitmap);
+//        Mat matBGR = Imgcodecs.imread(appPath + "/img0.png");
+//
+//        // BGR转RGB
+//        Mat matRGB = new Mat();
+//        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
+//        Bitmap bitmap = Bitmap.createBitmap(matRGB.cols(), matRGB.rows(), Bitmap.Config.ARGB_8888);
+//        Utils.matToBitmap(matRGB, bitmap);
 
         // TODO 获取特征点
+        Mat imgKeyPoint = findPoint(appPath + "/img0.png");
 
         // TODO 显示图片
         ImageView imageView = findViewById(R.id.sample_img);
@@ -120,5 +121,5 @@ public class MainActivity extends AppCompatActivity {
 
     public native void path2Size(String imgPath, ImgSize imgSize);
 
-    public native void findPoint(String img1, String img2);// 查找特征点 TODO 参数
+    public native Mat findPoint(String imgPath);// 查找特征点 TODO 参数
 }
