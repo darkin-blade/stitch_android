@@ -25,9 +25,8 @@ Java_com_example_stitch_MainActivity_findPoint(
         jobject thiz,
         jstring imgPath,
         jlong result) {
-    const char *img_name = env->GetStringUTFChars(imgPath, 0);
+    const char *img_name = env->GetStringUTFChars(imgPath, 0);// TODO 不能直接sprintf
     LOG("img name: %s", img_name);
-    return;// TODO
 
     // 读取图片
     Mat img = imread(img_name);

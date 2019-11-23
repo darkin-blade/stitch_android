@@ -93,20 +93,20 @@ public class MainActivity extends AppCompatActivity {
         infoLog("mid test");
 
         // 读取图片
-        Mat imgKeyPoint = new Mat();
-        findPoint(appPath + "/img0.png", imgKeyPoint.getNativeObjAddr());
-//        Mat matBGR = Imgcodecs.imread(appPath + "/img0.png");
-//
-//        // BGR转RGB
-//        Mat matRGB = new Mat();
-//        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
-//        Bitmap bitmap = Bitmap.createBitmap(matRGB.cols(), matRGB.rows(), Bitmap.Config.ARGB_8888);
-//        Utils.matToBitmap(matRGB, bitmap);
-
         // TODO 获取特征点
+        Mat matBGR = new Mat();
+        findPoint(appPath + "/img0.png", matBGR.getNativeObjAddr());
+        Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
+
+        // BGR转RGB
+        Mat matRGB = new Mat();
+        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
+        Utils.matToBitmap(matRGB, bitmap);
+
 
         // TODO 显示图片
         ImageView imageView = findViewById(R.id.sample_img);
+        imageView.setImageBitmap(bitmap);
     }
 
     static public void infoLog(String log) {
