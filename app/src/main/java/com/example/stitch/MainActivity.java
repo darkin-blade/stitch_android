@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         // 初始化路径字符串
         appPath = getExternalFilesDir("").getAbsolutePath();
 
-        midTest();
+        simpleTest();
     }
 
     public void simpleTest() {
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 获取图片大小
         ImgSize imgSize = new ImgSize(100, 101);
-        path2Size(appPath + "/img0.png", imgSize);
+//        path2Size(appPath + "/img0.png", imgSize);
         infoLog("width: " + imgSize.width + ", height: " + imgSize.height);
 
         // TODO 从jni获得图片
