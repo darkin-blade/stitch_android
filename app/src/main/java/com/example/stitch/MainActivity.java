@@ -16,6 +16,12 @@ import android.widget.Toast;
 
 import com.example.stitch.utils.ImgSize;
 
+import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
+
 public class MainActivity extends AppCompatActivity {
     static public int window_num;
     static public String appPath = null;// app路径
@@ -27,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
     static public final int SELECT_IMG = 3;// 本地文件管理器
     static public final int SAVE_IMG = 4;// 保存合并的图片到本地
 
+    // 初始化opencv java
+    static {
+        if (!OpenCVLoader.initDebug()) {
+            infoLog("opencv init failed");
+        }
+    }
 
     // TODO
     static {
@@ -51,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         // 初始化路径字符串
         appPath = getExternalFilesDir("").getAbsolutePath();
 
-        simpleTest();
+        midTest();
     }
 
     public void simpleTest() {
@@ -74,6 +86,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void midTest() {
+        // 读取图片
+        Mat matBGR = Imgcodecs.imread(appPath + "/img0.png");
+
+        // BGR转RGB
+        Mat matRGB = new Mat();
+        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
+        Bitmap bitmap = Bitmap.createBitmap(matRGB.cols(), matRGB.rows(), Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(matRGB, bitmap);
+
+        // TODO 获取特征点
+
+        // TODO 显示图片
+        ImageView imageView = findViewById(R.id.sample_img);
     }
 
     static public void infoLog(String log) {

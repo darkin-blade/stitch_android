@@ -58,8 +58,8 @@ Java_com_example_stitch_MainActivity_findPoint(
         imgs.push_back(img);// 保存图片到向量
 
         // 查找特征点
-        
-        computeImageFeatures(finder, img, features[i]);
+
+//        computeImageFeatures(finder, img, features[i]);
 
         // 绘制特征点
         if (false) {
