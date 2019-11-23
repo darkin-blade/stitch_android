@@ -123,5 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
     public native void sendString(String[] imgPaths);
 
-    public native void findPoint(String imgPath, long result);// 查找特征点 TODO 参数
+    public native void findPoint(String imgPath, long result);// 查找特征点
+
+    public native void matchPoint(String[] imgPaths, long result);// 匹配特征点
 }
