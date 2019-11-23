@@ -25,10 +25,7 @@ Java_com_example_stitch_MainActivity_findPoint(
         jobject thiz,
         jstring imgPath,
         jlong result) {
-    char img_name[64];
-
-    // 获取路径
-    sprintf(img_name, "%s", env->GetStringUTFChars(imgPath, 0));
+    const char *img_name = env->GetStringUTFChars(imgPath, 0);
     LOG("img name: %s", img_name);
     return;// TODO
 

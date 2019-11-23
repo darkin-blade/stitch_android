@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        infoLog("on create");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void init() {// 检查权限
+        infoLog("init");
+
         String permission = "android.permission.WRITE_EXTERNAL_STORAGE";
         int check_result = ActivityCompat.checkSelfPermission(this, permission);// `允许`返回0,`拒绝`返回-1
         if (check_result != PackageManager.PERMISSION_GRANTED) {// 没有`写`权限
@@ -86,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void midTest() {
+        infoLog("mid test");
+
         // 读取图片
         Mat imgKeyPoint = new Mat();
         findPoint(appPath + "/img0.png", imgKeyPoint.getNativeObjAddr());
