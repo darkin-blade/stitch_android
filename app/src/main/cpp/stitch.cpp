@@ -96,7 +96,7 @@ Java_com_example_stitch_MainActivity_matchPoint(
     }
 
     // 匹配特征点
-//    vector<MatchesInfo> pairwise_matches;
+    vector<MatchesInfo> pairwise_matches;
 //    Ptr<FeaturesMatcher> matcher;
 //    if (false) {// 定义特征匹配器
 //        matcher = makePtr<BestOf2NearestMatcher>(false, 0.3);// TODO 参数
