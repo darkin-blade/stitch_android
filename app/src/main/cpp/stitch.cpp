@@ -76,7 +76,6 @@ Java_com_example_stitch_MainActivity_matchPoint(
 
         // 放缩图片, cols 是宽
         LOG("%s: [%d, %d]", img_path, full_img.cols, full_img.rows);
-        continue;
         int width = 480;
         int height = full_img.rows * 480 / full_img.cols;
         img = Mat(height, width, full_img.type());
@@ -95,7 +94,6 @@ Java_com_example_stitch_MainActivity_matchPoint(
 
         full_img.release();
     }
-    return;
 
     // 匹配特征点
 //    vector<MatchesInfo> pairwise_matches;

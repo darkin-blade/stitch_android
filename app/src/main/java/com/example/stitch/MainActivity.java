@@ -81,22 +81,22 @@ public class MainActivity extends AppCompatActivity {
     public void midTest() {
         infoLog("mid test");
 
-        // 读取图片
-        // TODO 获取特征点
         Mat matBGR = new Mat();
+        // 查找特征点
 //        findPoint(appPath + "/img0.png", matBGR.getNativeObjAddr());
-        matchPoint(new String[]{"mac1.jpg", "mac2.jpg"}, matBGR.getNativeObjAddr());
-//        Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
-//
-//        // BGR转RGB
-//        Mat matRGB = new Mat();
-//        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
-//        Utils.matToBitmap(matRGB, bitmap);
-//
-//
-//        // TODO 显示图片
-//        ImageView imageView = findViewById(R.id.sample_img);
-//        imageView.setImageBitmap(bitmap);
+        // 匹配特征点
+        matchPoint(new String[]{appPath + "/mac1.jpg", appPath + "/mac2.jpg"}, matBGR.getNativeObjAddr());
+        Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
+
+        // BGR转RGB
+        Mat matRGB = new Mat();
+        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
+        Utils.matToBitmap(matRGB, bitmap);
+
+
+        // TODO 显示图片
+        ImageView imageView = findViewById(R.id.sample_img);
+        imageView.setImageBitmap(bitmap);
     }
 
     static public void infoLog(String log) {
