@@ -70,6 +70,7 @@ Java_com_example_stitch_MainActivity_matchPoint(
     for (int i = 0; i < img_num; i ++) {
         // TODO 读取图片
         jstring tmp = (jstring) env->GetObjectArrayElement(imgPaths, i);
+        return;
         const char *img_path = env->GetStringUTFChars(tmp, 0);
         Mat full_img = imread(img_path);// 临时存放完整图片
 

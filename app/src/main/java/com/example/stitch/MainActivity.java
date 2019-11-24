@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         // 初始化路径字符串
         appPath = getExternalFilesDir("").getAbsolutePath();
 
-        midTest();
+        simpleTest();
     }
 
     public void simpleTest() {
@@ -74,14 +74,8 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
 
-        int tmp = 10;
-        String[] imgPaths = new String[tmp];
-        for (int i = 0; i < tmp; i ++) {
-            imgPaths[i] = "fuck[" + i + "]";
-        }
-
         // TODO 测试
-        sendString(imgPaths);
+        sendString(new String[]{"mac0.jpg", "mac1.jpg"});
     }
 
     public void midTest() {
@@ -90,18 +84,19 @@ public class MainActivity extends AppCompatActivity {
         // 读取图片
         // TODO 获取特征点
         Mat matBGR = new Mat();
-        findPoint(appPath + "/img0.png", matBGR.getNativeObjAddr());
-        Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
-
-        // BGR转RGB
-        Mat matRGB = new Mat();
-        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
-        Utils.matToBitmap(matRGB, bitmap);
-
-
-        // TODO 显示图片
-        ImageView imageView = findViewById(R.id.sample_img);
-        imageView.setImageBitmap(bitmap);
+//        findPoint(appPath + "/img0.png", matBGR.getNativeObjAddr());
+        matchPoint(new String[]{"mac0.jpg", "mac1.jpg"}, matBGR.getNativeObjAddr());
+//        Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
+//
+//        // BGR转RGB
+//        Mat matRGB = new Mat();
+//        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
+//        Utils.matToBitmap(matRGB, bitmap);
+//
+//
+//        // TODO 显示图片
+//        ImageView imageView = findViewById(R.id.sample_img);
+//        imageView.setImageBitmap(bitmap);
     }
 
     static public void infoLog(String log) {
