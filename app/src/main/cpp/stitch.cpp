@@ -97,24 +97,13 @@ Java_com_example_stitch_MainActivity_matchPoint(
 
     // 匹配特征点
     vector<MatchesInfo> pairwise_matches;
-//    Ptr<FeaturesMatcher> matcher;
-//    if (false) {// 定义特征匹配器
-//        matcher = makePtr<BestOf2NearestMatcher>(false, 0.3);// TODO 参数
-//    } else if (true) {
-//        matcher = makePtr<AffineBestOf2NearestMatcher>(false, false, 0.3);// TODO 参数
-//    } else {
-//        assert(0);
-//    }
-
-//    (*matcher)(features, pairwise_matches);// 进行特征匹配
 
     // 第三种匹配方法, 参考: https://www.jianshu.com/p/420f8211d1cb
-    Ptr<Feature2D> descriptor = ORB::create();// 原文 typedef DescriptorExtractor
     vector<Mat> imgMatches(img_num);// 记录特征点信息
     Ptr<DescriptorMatcher> descriptor_matcher = DescriptorMatcher::create("BruteForce-Hamming");// 使用汉明距离进行匹配
 
-    descriptor->compute(imgs[0], features[0].keypoints, imgMatches[0]);
-    descriptor->compute(imgs[1], features[1].keypoints, imgMatches[1]);
+    finder->compute(imgs[0], features[0].keypoints, imgMatches[0]);
+    finder->compute(imgs[1], features[1].keypoints, imgMatches[1]);
 
     // 特征点匹配
     vector<DMatch> bad_matches, good_matches;
@@ -124,6 +113,17 @@ Java_com_example_stitch_MainActivity_matchPoint(
     Mat bad_match, good_match;
     drawMatches(imgs[0], features[0].keypoints, imgs[1], features[1].keypoints, bad_matches, bad_match);
 
-    // 调整窗口大小
-    *(Mat *)result = bad_match;
+    *(Mat *)result = bad_match;// TODO
+
+    // TODO 全局匹配
+    Ptr<FeaturesMatcher> matcher;
+    if (false) {// 定义特征匹配器
+        matcher = makePtr<BestOf2NearestMatcher>();// TODO 参数
+    } else if (true) {
+        matcher = makePtr<AffineBestOf2NearestMatcher>();// TODO 参数
+    } else {
+        assert(0);
+    }
+
+    (*matcher)(features, pairwise_matches);// 进行特征匹配
 }
