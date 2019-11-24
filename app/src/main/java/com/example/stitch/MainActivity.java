@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         // 初始化路径字符串
         appPath = getExternalFilesDir("").getAbsolutePath();
 
-        simpleTest();
+        midTest();
     }
 
     public void simpleTest() {
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(stringFromJNI());
 
         // TODO 测试
-        sendString(new String[]{"mac0.jpg", "mac1.jpg"});
+        sendString(new String[]{"mac1.jpg", "mac2.jpg"});
     }
 
     public void midTest() {
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         // TODO 获取特征点
         Mat matBGR = new Mat();
 //        findPoint(appPath + "/img0.png", matBGR.getNativeObjAddr());
-        matchPoint(new String[]{"mac0.jpg", "mac1.jpg"}, matBGR.getNativeObjAddr());
+        matchPoint(new String[]{"mac1.jpg", "mac2.jpg"}, matBGR.getNativeObjAddr());
 //        Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
 //
 //        // BGR转RGB
