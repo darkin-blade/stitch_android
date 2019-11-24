@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         // 初始化路径字符串
         appPath = getExternalFilesDir("").getAbsolutePath();
 
-        simpleTest();
+        midTest();
     }
 
     public void simpleTest() {
