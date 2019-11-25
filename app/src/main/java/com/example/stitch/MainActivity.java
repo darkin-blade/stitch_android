@@ -19,8 +19,6 @@ import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
     static public int window_num;
     static public String appPath = null;// app路径
@@ -75,12 +73,6 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(stringFromJNI());
 
         // TODO 测试
-        sendString(new String[]{"mac1.jpg", "mac2.jpg"});
-        Bitmap bitmap = Bitmap.createBitmap(1280, 1280, Bitmap.Config.ARGB_8888);// TODO
-        path2Bmp(appPath + "/mac1.jpg", bitmap);
-
-        ImageView imageView = findViewById(R.id.sample_img);
-        imageView.setImageBitmap(bitmap);
     }
 
     public void midTest() {
@@ -116,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    // TODO native 方法
+    // native 方法
     public native String stringFromJNI();
 
     public native void path2Bmp(String imgPath, Bitmap imgSend);
