@@ -36,7 +36,9 @@ android {
     }
     sourceSets {
         main {
-            jniLibs.srcDirs = ['/home/lynx/fuck_mount/Android/Proj/OpenCV410-sdk/OpenCV-android-sdk/sdk/native/libs']// 自编译
+//            jniLibs.srcDirs = ['/home/lynx/fuck_mount/Android/Proj/OpenCV3-android-sdk/sdk/native/libs']// 官方3.4.7
+            jniLibs.srcDirs = ['/home/lynx/fuck_mount/Android/Proj/OpenCV410-sdk/OpenCV-android-sdk/sdk/native/libs',
+                               '/home/lynx/fuck_mount/Android/Proj/OpenCV3-android-sdk/sdk/native/libs']// 自编译
 //            jniLibs.srcDirs = ['/home/lynx/fuck_mount/Android/Proj/OpenCV410-android-sdk/sdk/native/libs']// 官方4.1.0
         }
     }
@@ -46,8 +48,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation project(":opencv4")// TODO 模块名称
+//    implementation project(":opencv4")// TODO 模块名称
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation project(path: ':openCVLibrary347')
 }
