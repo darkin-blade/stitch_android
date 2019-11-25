@@ -34,7 +34,7 @@ android {
     }
     sourceSets {
         main {
-            jniLibs.srcDirs = ['/home/lynx/fuck_mount/Android/Proj/OpenCV4-android-sdk/sdk/native/libs']
+            jniLibs.srcDirs = ['/home/lynx/fuck_mount/Android/Proj/OpenCV410-android-sdk/sdk/native/libs']
         }
     }
 }
