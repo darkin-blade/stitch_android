@@ -23,10 +23,18 @@ if (false)
         message(WARNING "opencv not found!")
     endif(OpenCV_FOUND)
 elseif (true)
-    include_directories(/home/lynx/fuck_mount/Android/Proj/${opencv_version}/sdk/native/jni/include)
-    add_library(fuck SHARED IMPORTED)
-    set_target_properties(fuck PROPERTIES IMPORTED_LOCATION
-            /home/lynx/fuck_mount/Android/Proj/${opencv_version}/sdk/native/libs/${ANDROID_ABI}/${opencv_lib})
+    if (false)
+        include_directories(/home/lynx/fuck_mount/Android/Proj/${opencv_version}/sdk/native/jni/include)
+        add_library(fuck SHARED IMPORTED)
+        set_target_properties(fuck PROPERTIES IMPORTED_LOCATION
+                /home/lynx/fuck_mount/Android/Proj/${opencv_version}/sdk/native/libs/${ANDROID_ABI}/${opencv_lib})
+    endif()
+    if (true)
+        include_directories(/home/lynx/fuck_mount/Android/Proj/OpenCV410-sdk/OpenCV-android-sdk/sdk/native/jni/include)
+        add_library(fuck SHARED IMPORTED)
+        set_target_properties(fuck PROPERTIES IMPORTED_LOCATION
+                /home/lynx/fuck_mount/Android/Proj/OpenCV410-sdk/OpenCV-android-sdk/sdk/native/libs/${ANDROID_ABI}/libopencv_world.so)
+    endif()
 endif()
 
 

@@ -116,14 +116,14 @@ Java_com_example_stitch_MainActivity_matchPoint(
     *(Mat *)result = bad_match;// TODO
 
     // TODO 全局匹配
-//    Ptr<FeaturesMatcher> matcher;
-//    if (false) {// 定义特征匹配器
-//        matcher = makePtr<BestOf2NearestMatcher>();// TODO 参数
-//    } else if (true) {
-//        matcher = makePtr<AffineBestOf2NearestMatcher>();// TODO 参数
-//    } else {
-//        assert(0);
-//    }
+    Ptr<FeaturesMatcher> matcher;
+    if (false) {// 定义特征匹配器
+        matcher = makePtr<BestOf2NearestMatcher>();// TODO 参数
+    } else if (true) {
+        matcher = makePtr<AffineBestOf2NearestMatcher>();// TODO 参数
+    } else {
+        assert(0);
+    }
 
-//    (*matcher)(features, pairwise_matches);// 进行特征匹配
+    (*matcher)(features, pairwise_matches);// 进行特征匹配
 }

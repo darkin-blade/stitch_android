@@ -17,6 +17,8 @@ android {
                 // TODO 解决opencv 4.x 版本`libc++_shared.so`找不到的问题
                 arguments "-DANDROID_STL=c++_shared"
 //                , "-DANDROID_TOOLCHAIN=clang"
+                // TODO 限定abi
+                abiFilters "armeabi-v7a"
             }
         }
     }
@@ -34,7 +36,8 @@ android {
     }
     sourceSets {
         main {
-            jniLibs.srcDirs = ['/home/lynx/fuck_mount/Android/Proj/OpenCV410-android-sdk/sdk/native/libs']
+            jniLibs.srcDirs = ['/home/lynx/fuck_mount/Android/Proj/OpenCV410-sdk/OpenCV-android-sdk/sdk/native/libs']// 自编译
+//            jniLibs.srcDirs = ['/home/lynx/fuck_mount/Android/Proj/OpenCV410-android-sdk/sdk/native/libs']// 官方4.1.0
         }
     }
 }
