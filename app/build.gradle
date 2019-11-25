@@ -17,8 +17,8 @@ android {
                 // TODO 解决opencv 4.x 版本`libc++_shared.so`找不到的问题
                 arguments "-DANDROID_STL=c++_shared"
 //                , "-DANDROID_TOOLCHAIN=clang"
-                // TODO 限定abi
-                abiFilters "armeabi-v7a"
+                // TODO 限定abi 运行时不要用!
+//                abiFilters "armeabi-v7a"
             }
         }
     }

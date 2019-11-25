@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         // 初始化路径字符串
         appPath = getExternalFilesDir("").getAbsolutePath();
 
-        midTest();
+        simpleTest();
     }
 
     public void simpleTest() {
@@ -76,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO 测试
         sendString(new String[]{"mac1.jpg", "mac2.jpg"});
+        Bitmap bitmap = Bitmap.createBitmap(1280, 1280, Bitmap.Config.ARGB_8888);// TODO
+        path2Bmp(appPath + "/mac1.jpg", bitmap);
+
+        ImageView imageView = findViewById(R.id.sample_img);
+        imageView.setImageBitmap(bitmap);
     }
 
     public void midTest() {

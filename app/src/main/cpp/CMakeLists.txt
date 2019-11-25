@@ -31,8 +31,8 @@ elseif (true)
     endif()
     if (true)
         include_directories(/home/lynx/fuck_mount/Android/Proj/OpenCV410-sdk/OpenCV-android-sdk/sdk/native/jni/include)
-        add_library(fuck SHARED IMPORTED)
-        set_target_properties(fuck PROPERTIES IMPORTED_LOCATION
+        add_library(shit SHARED IMPORTED)
+        set_target_properties(shit PROPERTIES IMPORTED_LOCATION
                 /home/lynx/fuck_mount/Android/Proj/OpenCV410-sdk/OpenCV-android-sdk/sdk/native/libs/${ANDROID_ABI}/libopencv_world.so)
     endif()
 endif()
@@ -70,7 +70,8 @@ target_link_libraries( # Specifies the target library.
         native-lib
 
         # opencv库定义的
-        fuck
+#        fuck
+        shit
         # TODO 解决 AndroidBitmap 报错, 使本机代码安全地访问Java对象的像素缓冲区的位图
         jnigraphics
 
