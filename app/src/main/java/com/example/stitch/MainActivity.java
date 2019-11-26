@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 //        findPoint(appPath + "/img0.png", matBGR.getNativeObjAddr());
         // 匹配特征点
         matchPoint(new String[]{appPath + "/mac1.jpg", appPath + "/mac2.jpg"}, matBGR.getNativeObjAddr());
+        infoLog("mid mat size:[" + matBGR.cols() + ", " + matBGR.cols() + "]");
         Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
 
         // BGR转RGB
