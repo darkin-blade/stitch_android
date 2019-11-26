@@ -198,7 +198,6 @@ Java_com_example_stitch_MainActivity_matchPoint(
         corners[i] = warper->warp(imgs[i], K, cameras[i].R, INTER_LINEAR, BORDER_REFLECT, images_warped[i]);
         warper->warp(masks[i], K, cameras[i].R, INTER_NEAREST, BORDER_CONSTANT, masks_warped[i]);
     }
-    LOG("UMat size:[%d, %d]", images_warped[0].cols, images_warped[0].rows);// TODO delete
 
     vector<UMat> images_warped_f(img_num);// TODO
     for (int i = 0; i < img_num; i ++) {// 图像数据类型转换
@@ -261,7 +260,8 @@ Java_com_example_stitch_MainActivity_matchPoint(
         }
     }
 
-    *(Mat *)result = bad_match;// images_warped[0].getMat(ACCESS_READ);
+    Mat tmp = images_warped[0].getMat(ACCESS_READ);// images_warped[0].getMat(ACCESS_READ);
+    LOG("Mat size:[%d, %d]", tmp.cols, tmp.rows);// TODO delete
     images_warped[0].copyTo(*(Mat *)result);
     return;
 
