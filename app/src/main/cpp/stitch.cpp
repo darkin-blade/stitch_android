@@ -54,7 +54,6 @@ Java_com_example_stitch_MainActivity_matchPoint(
         jobjectArray imgPaths,
         jlong result) {
     int img_num = (int)env->GetArrayLength(imgPaths);
-    LOG("%d", img_num);
 
     Ptr<Feature2D> finder;
     if (true) {
@@ -83,8 +82,7 @@ Java_com_example_stitch_MainActivity_matchPoint(
         imgs.push_back(img);// 保存图片到向量
 
         // 查找特征点
-        finder->detectAndCompute(img, noArray(), features[i].keypoints, features[i].descriptors);
-        // computeImageFeatures(finder, img, features[i]);
+         computeImageFeatures(finder, img, features[i]);
 
         // 绘制特征点
         if (true) {
@@ -200,6 +198,7 @@ Java_com_example_stitch_MainActivity_matchPoint(
         corners[i] = warper->warp(imgs[i], K, cameras[i].R, INTER_LINEAR, BORDER_REFLECT, images_warped[i]);
         warper->warp(masks[i], K, cameras[i].R, INTER_NEAREST, BORDER_CONSTANT, masks_warped[i]);
     }
+    LOG("UMat size:[%d, %d]", images_warped[0].cols, images_warped[0].rows);// TODO delete
 
     vector<UMat> images_warped_f(img_num);// TODO
     for (int i = 0; i < img_num; i ++) {// 图像数据类型转换
@@ -262,11 +261,8 @@ Java_com_example_stitch_MainActivity_matchPoint(
         }
     }
 
-    LOG("Mat size:[%d, %d]", bad_match.cols, bad_match.rows);
-    LOG("Mat size:[%d, %d]", images_warped[0].getMat(ACCESS_RW).cols, images_warped[0].getMat(ACCESS_RW).rows);
-    Mat tmp = images_warped[0].getMat(ACCESS_READ);
-    LOG("Mat size:[%d, %d]", tmp.cols, tmp.rows);
-    *(Mat *)result = bad_match;
+    *(Mat *)result = bad_match;// images_warped[0].getMat(ACCESS_READ);
+    images_warped[0].copyTo(*(Mat *)result);
     return;
 
 }
