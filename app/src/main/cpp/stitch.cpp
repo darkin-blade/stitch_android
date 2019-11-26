@@ -260,10 +260,8 @@ Java_com_example_stitch_MainActivity_matchPoint(
         }
     }
 
-    Mat tmp = images_warped[0].getMat(ACCESS_READ);// images_warped[0].getMat(ACCESS_READ);
-//    images_warped[0].copyTo(*(Mat *)result);
-    *(Mat *)result = tmp.clone();
-    LOG("Mat size:[%d, %d]", (*(Mat *)result).cols, (*(Mat *)result).rows);// TODO delete
+    Mat tmp = images_warped[0].getMat(ACCESS_READ);
+    *(Mat *)result = tmp.clone();// 一定要用clone
     return;
 
 }
