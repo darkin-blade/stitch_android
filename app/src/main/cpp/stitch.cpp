@@ -261,8 +261,9 @@ Java_com_example_stitch_MainActivity_matchPoint(
     }
 
     Mat tmp = images_warped[0].getMat(ACCESS_READ);// images_warped[0].getMat(ACCESS_READ);
-    LOG("Mat size:[%d, %d]", tmp.cols, tmp.rows);// TODO delete
-    images_warped[0].copyTo(*(Mat *)result);
+//    images_warped[0].copyTo(*(Mat *)result);
+    *(Mat *)result = tmp.clone();
+    LOG("Mat size:[%d, %d]", (*(Mat *)result).cols, (*(Mat *)result).rows);// TODO delete
     return;
 
 }
