@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,25 +19,21 @@ import android.widget.Toast;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
     static public int window_num;
     static public String appPath = null;// app路径
-    public int isExit;
 
     static public final int MAIN = 0;
-    static public final int LOCAL_RECOGNIZE = 1;// 本地选取图片
-    static public final int TAKE_PICTURES = 2;// 拍照获取图片
-    static public final int SELECT_IMG = 3;// 本地文件管理器
-    static public final int SAVE_IMG = 4;// 保存合并的图片到本地
 
-    Spinner featuresType;
+    Spinner featuresTypeList;
+    Button button_1;
 
     // 初始化opencv java
     static {
         if (!OpenCVLoader.initDebug()) {
-            infoLog("opencv initApp failed");
+            infoLog("opencv init failed");
+        } else {
+            infoLog("opencv init succeed");
         }
     }
 
@@ -47,18 +44,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        infoLog("on create");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
         initApp();
         initUI();
+
+        infoLog("create finish");
     }
 
     public void initApp() {// 检查权限
-        infoLog("initApp");
-
         String permission = "android.permission.WRITE_EXTERNAL_STORAGE";
         int check_result = ActivityCompat.checkSelfPermission(this, permission);// `允许`返回0,`拒绝`返回-1
         if (check_result != PackageManager.PERMISSION_GRANTED) {// 没有`写`权限
@@ -70,14 +65,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initUI() {
-        featuresType = findViewById(R.id.features_type);
+        featuresTypeList = findViewById(R.id.features_type);
+        button_1 = findViewById(R.id.button_1);
+
         String[] featuresTypeArray = new String[]{"orb", "akaze"};
         ArrayAdapter<String> featuresTypeAdapter = new ArrayAdapter<String>(this, R.layout.spinner_1, featuresTypeArray);
-        featuresType.setAdapter(featuresTypeAdapter);
+        featuresTypeList.setAdapter(featuresTypeAdapter);
+
+        button_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                simpleTest();
+            }
+        });
     }
 
     public void simpleTest() {
-        // TODO 测试
+        String featuresType = (String) featuresTypeList.getSelectedItem();
+        infoLog("features type: " + featuresType);
     }
 
     public void midTest() {
