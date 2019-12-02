@@ -13,6 +13,7 @@
         android:layout_height="wrap_content">
 
         <Spinner
+            android:id="@+id/features_type"
             style="@style/select_1"
             android:background="@color/black">
         </Spinner>

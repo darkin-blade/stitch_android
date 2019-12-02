@@ -10,14 +10,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     static public int window_num;
@@ -30,10 +31,12 @@ public class MainActivity extends AppCompatActivity {
     static public final int SELECT_IMG = 3;// 本地文件管理器
     static public final int SAVE_IMG = 4;// 保存合并的图片到本地
 
+    Spinner featuresType;
+
     // 初始化opencv java
     static {
         if (!OpenCVLoader.initDebug()) {
-            infoLog("opencv init failed");
+            infoLog("opencv initApp failed");
         }
     }
 
@@ -49,11 +52,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        init();
+        initApp();
+        initUI();
     }
 
-    public void init() {// 检查权限
-        infoLog("init");
+    public void initApp() {// 检查权限
+        infoLog("initApp");
 
         String permission = "android.permission.WRITE_EXTERNAL_STORAGE";
         int check_result = ActivityCompat.checkSelfPermission(this, permission);// `允许`返回0,`拒绝`返回-1
@@ -63,8 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
         // 初始化路径字符串
         appPath = getExternalFilesDir("").getAbsolutePath();
+    }
 
-        midTest();
+    public void initUI() {
+        featuresType = findViewById(R.id.features_type);
+        String[] featuresTypeArray = new String[]{"orb", "akaze"};
+        ArrayAdapter<String> featuresTypeAdapter = new ArrayAdapter<String>(this, R.layout.spinner_1, featuresTypeArray);
+        featuresType.setAdapter(featuresTypeAdapter);
     }
 
     public void simpleTest() {
@@ -78,19 +87,7 @@ public class MainActivity extends AppCompatActivity {
         // 查找特征点
 //        findPoint(appPath + "/img0.png", matBGR.getNativeObjAddr());
         // 匹配特征点
-        matchPoint(new String[]{appPath + "/mac1.jpg", appPath + "/mac2.jpg"}, matBGR.getNativeObjAddr());
-        infoLog("mid mat size:[" + matBGR.cols() + ", " + matBGR.cols() + "]");
-        Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
-
-        // BGR转RGB
-        Mat matRGB = new Mat();
-        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
-        Utils.matToBitmap(matRGB, bitmap);
-
-
-        // TODO 显示图片
-        ImageView imageView = findViewById(R.id.sample_img);
-        imageView.setImageBitmap(bitmap);
+//        matchPoint(new String[]{appPath + "/mac1.jpg", appPath + "/mac2.jpg"}, matBGR.getNativeObjAddr());
     }
 
     static public void infoLog(String log) {
@@ -106,11 +103,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // native 方法
+
+    public native void stitch_e(String featuresType);
+
+    // 不用的 native 方法
     public native void path2Bmp(String imgPath, Bitmap imgSend);
-
     public native void sendString(String[] imgPaths);
-
     public native void findPoint(String imgPath, long result);// 查找特征点
-
     public native void matchPoint(String[] imgPaths, long result);// 匹配特征点
 }
