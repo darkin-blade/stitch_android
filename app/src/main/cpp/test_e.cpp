@@ -63,6 +63,7 @@ Java_com_example_stitch_MainActivity_stitch_1e(
         jobjectArray imgPaths,
         jstring featuresType,
         jstring warpType,
+        jstring waveCorrectType,
         jlong result_mat) {
     // 接收图片路径
     jsize str_len = env->GetArrayLength(imgPaths);
@@ -78,6 +79,12 @@ Java_com_example_stitch_MainActivity_stitch_1e(
     // 接收所有参数
     features_type = env->GetStringUTFChars(featuresType, 0);
     warp_type = env->GetStringUTFChars(warpType, 0);
+    string wave_correct_type = env->GetStringUTFChars(waveCorrectType, 0);
+    if (wave_correct_type == "horiz") {
+        wave_correct = detail::WAVE_CORRECT_HORIZ;
+    } else if (wave_correct_type == "vert") {
+        wave_correct = detail::WAVE_CORRECT_VERT;
+    }
 
     // Check if have enough images
 

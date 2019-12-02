@@ -4,16 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,16 +21,18 @@ import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
     static public int window_num;
     static public String appPath = null;// app路径
 
-    static public final int MAIN = 0;
+    static public final int MAIN = 0,
+            LOCAL_RECOGNIZE = 1,
+            LOCAL_RECOGNIZE_PARAM = 2;
 
-    Spinner featuresList;
-    Spinner warpList;
-    Spinner waveCorrectList;// 波形矫正
-    Button button_1;
+    static public LocalRecognize localRecognize;// 本地识别
+
+    // protected
+    Button btnLocalRecognize;
 
     // 初始化opencv java
     static {
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.local_recognize);
 
         initApp();
         initUI();
@@ -67,69 +68,21 @@ public class MainActivity extends AppCompatActivity {
 
         // 初始化路径字符串
         appPath = getExternalFilesDir("").getAbsolutePath();
+
+        // 初始化 dialog
+        // 初始化 组件
+        localRecognize = new LocalRecognize();
     }
 
     public void initUI() {
-        // 按钮
-        button_1 = findViewById(R.id.button_1);
+        btnLocalRecognize = findViewById(R.id.local_recognize);
 
-        // 下拉菜单
-        featuresList = findViewById(R.id.features_type);
-        warpList = findViewById(R.id.wrap_type);
-
-        String[] tmpString = new String[]{"orb", "akaze"};
-        ArrayAdapter<String> tmpAdapter = new ArrayAdapter<String>(this, R.layout.spinner_1, tmpString);
-        featuresList.setAdapter(tmpAdapter);
-
-        tmpString = new String[]{"plane", "affine", "cylindrical", "spherical"};
-        tmpAdapter = new ArrayAdapter<>(this, R.layout.spinner_1, tmpString);
-        warpList.setAdapter(tmpAdapter);
-
-        button_1.setOnClickListener(new View.OnClickListener() {
+        btnLocalRecognize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                simpleTest();
+                localRecognize.show(getSupportFragmentManager(), "local recognize");
             }
         });
-    }
-
-    public void simpleTest() {
-        String featuresType = (String) featuresList.getSelectedItem();
-        String warpType = (String) warpList.getSelectedItem();
-        String[] imgPaths = new String[2];
-
-        for (int i = 0; i < 2; i ++) {
-            imgPaths[i] = appPath + "/boat" + (i + 1) + ".jpg";
-        }
-
-        Mat matBGR = new Mat();
-        int result = stitch_e(
-                imgPaths,
-                featuresType,
-                warpType,
-                matBGR.getNativeObjAddr()
-        );
-
-        if (result != 0) {
-            infoLog("failed");
-            return;
-        } else {
-            infoLog("mat size " + matBGR.cols() + ", " + matBGR.rows());
-            if (matBGR.cols() * matBGR.rows() == 0) {
-                return;
-            }
-        }
-
-        Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
-
-        // BGR转RGB
-        Mat matRGB = new Mat();
-        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
-        Utils.matToBitmap(matRGB, bitmap);
-
-        // 显示图片
-        ImageView imageView = findViewById(R.id.sample_img);
-        imageView.setImageBitmap(bitmap);
     }
 
     public void midTest() {
@@ -155,11 +108,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // native 方法
-
-    public native int stitch_e(
+    static public native int stitch_e(
             String[] imgPaths,
             String featuresType,
             String wrapType,
+            String waveCorrectType,
             long result
     );
 
@@ -168,4 +121,9 @@ public class MainActivity extends AppCompatActivity {
     public native void sendString(String[] imgPaths);
     public native void findPoint(String imgPath, long result);// 查找特征点
     public native void matchPoint(String[] imgPaths, long result);// 匹配特征点
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        ;// TODO
+    }
 }

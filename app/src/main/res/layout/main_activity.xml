@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,66 +11,35 @@
         android:text="Stitch">
     </TextView>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingVertical="10dp"
+        android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/bottom_1"
-            app:layout_constraintTop_toTopOf="parent">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        <Button
+            android:id="@+id/local_recognize"
+            style="@style/item_1"
+            android:text="Local Recognize">
+        </Button>
+        <Button
+            style="@style/item_2"
+            android:text="TODO">
+        </Button>
+        <Button
+            style="@style/item_3"
+            android:text="TODO">
+        </Button>
+        <Button
+            style="@style/item_4"
+            android:text="TODO">
+        </Button>
+        <Button
+            style="@style/item_7"
+            android:text="TODO">
+        </Button>
 
-                <Spinner
-                    android:id="@+id/features_type"
-                    style="@style/select_1">
-                </Spinner>
-                <Spinner
-                    android:id="@+id/wrap_type"
-                    style="@style/select_1">
-                </Spinner>
-
-                <ImageView
-                    android:id="@+id/sample_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/bottom_1">
-                </ImageView>
-
-            </LinearLayout>
-        </ScrollView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/bottom_1"
-            android:background="@color/grey"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <View
-                style="@style/line">
-            </View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:padding="6dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/button_1"
-                    style="@style/button_1"
-                    android:text="Go"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </LinearLayout>
 
 </LinearLayout>
