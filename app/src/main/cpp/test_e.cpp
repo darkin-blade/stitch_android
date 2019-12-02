@@ -56,36 +56,36 @@ bool timelapse = false;
 int range_width = -1;
 
 extern "C"
-JNIEXPORT void JNICALL
+JNIEXPORT int JNICALL
 Java_com_example_stitch_MainActivity_stitch_1e(
         JNIEnv *env,
         jobject thiz,
+        jobjectArray imgPaths,
         jstring featuresType,
         jstring warpType,
         jlong result_mat) {
+    // 接收图片路径
+    jsize str_len = env->GetArrayLength(imgPaths);
+
+    for (int i = 0; i < str_len; i ++) {
+        jstring tmp = (jstring) env->GetObjectArrayElement(imgPaths, i);
+        string img_path = env->GetStringUTFChars(tmp, 0);
+        img_names.push_back(img_path);
+
+        LOG("img[%d]: %s", i, img_path.data());
+    }
+
     // 接收所有参数
     features_type = env->GetStringUTFChars(featuresType, 0);
     warp_type = env->GetStringUTFChars(warpType, 0);
 
-    LOG("%s %s", features_type.data(), warp_type.data());
-
-
-//    jsize str_len = env->GetArrayLength(imgPaths);
-//
-//    for (int i = 0; i < str_len; i ++) {
-//        jstring tmp = (jstring) env->GetObjectArrayElement(imgPaths, i);
-//        const char *img_path = env->GetStringUTFChars(tmp, 0);
-//
-//        LOG("img[%d]: %s", i, img_path);
-//    }
     // Check if have enough images
-    img_names.push_back("");
 
     int num_images = static_cast<int>(img_names.size());
     if (num_images < 2)
     {
         // LOGLN("Need more images");
-        assert(0);
+        return -1;
     }
 
     double work_scale = 1, seam_scale = 1, compose_scale = 1;
@@ -113,7 +113,7 @@ Java_com_example_stitch_MainActivity_stitch_1e(
 #endif
     else
     {
-        assert(0);
+        return -1;
     }
 
     Mat full_img, img;
@@ -122,14 +122,15 @@ Java_com_example_stitch_MainActivity_stitch_1e(
     vector<Size> full_img_sizes(num_images);
     double seam_work_aspect = 1;
 
-    for (int i = 0; i < num_images; ++i)
+    for (int i = 0; i < num_images; i ++)
     {
-        full_img = imread(samples::findFile(img_names[i]));
+        full_img = imread(img_names[i]);
         full_img_sizes[i] = full_img.size();
 
         if (full_img.empty())
         {
-            assert(0);
+            LOG("full img [%s][%d, %d]", img_names[i].data(), full_img.cols, full_img.rows);
+            return -1;
         }
         if (work_megapix < 0)
         {
@@ -162,6 +163,8 @@ Java_com_example_stitch_MainActivity_stitch_1e(
 
     full_img.release();
     img.release();
+
+    LOG("find points");
 
     // 进行特征匹配,参考: https://blog.csdn.net/zhaocj/article/details/78799194
     vector<MatchesInfo> pairwise_matches;
@@ -205,8 +208,9 @@ Java_com_example_stitch_MainActivity_stitch_1e(
     num_images = static_cast<int>(img_names.size());
     if (num_images < 2)
     {
-        assert(0);
+        return -1;
     }
+    LOG("point match");
 
     // 相机参数评估,参考: https://blog.csdn.net/zhaocj/article/details/78809143
     Ptr<Estimator> estimator;
@@ -218,7 +222,7 @@ Java_com_example_stitch_MainActivity_stitch_1e(
     vector<CameraParams> cameras;
     if (!(*estimator)(features, pairwise_matches, cameras))
     {
-        assert(0);
+        return -1;
     }
 
     for (size_t i = 0; i < cameras.size(); ++i)
@@ -236,7 +240,7 @@ Java_com_example_stitch_MainActivity_stitch_1e(
     else if (ba_cost_func == "no") adjuster = makePtr<NoBundleAdjuster>();
     else
     {
-        assert(0);
+        return -1;
     }
     adjuster->setConfThresh(conf_thresh);
     Mat_<uchar> refine_mask = Mat::zeros(3, 3, CV_8U);
@@ -248,7 +252,7 @@ Java_com_example_stitch_MainActivity_stitch_1e(
     adjuster->setRefinementMask(refine_mask);
     if (!(*adjuster)(features, pairwise_matches, cameras))
     {
-        assert(0);
+        return -1;
     }
 
     // Find median focal length
@@ -256,7 +260,6 @@ Java_com_example_stitch_MainActivity_stitch_1e(
     vector<double> focals;
     for (size_t i = 0; i < cameras.size(); ++i)
     {
-        LOGLN("Camera #" << indices[i]+1 << ":\nK:\n" << cameras[i].K() << "\nR:\n" << cameras[i].R);
         focals.push_back(cameras[i].focal);
     }
 
@@ -266,6 +269,7 @@ Java_com_example_stitch_MainActivity_stitch_1e(
         warped_image_scale = static_cast<float>(focals[focals.size() / 2]);
     else
         warped_image_scale = static_cast<float>(focals[focals.size() / 2 - 1] + focals[focals.size() / 2]) * 0.5f;
+    LOG("camera estimate");
 
     // TODO 波形矫正
     if (do_wave_correct)
@@ -290,6 +294,7 @@ Java_com_example_stitch_MainActivity_stitch_1e(
         masks[i].create(images[i].size(), CV_8U);
         masks[i].setTo(Scalar::all(255));
     }
+    LOG("wave correct");
 
     // Warp images and their masks
 
@@ -344,7 +349,7 @@ Java_com_example_stitch_MainActivity_stitch_1e(
 
     if (!warper_creator)
     {
-        assert(0);
+        return -1;
     }
 
     Ptr<RotationWarper> warper = warper_creator->create(static_cast<float>(warped_image_scale * seam_work_aspect));
@@ -367,6 +372,7 @@ Java_com_example_stitch_MainActivity_stitch_1e(
     // 图像数据类型转换
     for (int i = 0; i < num_images; ++i)
         images_warped[i].convertTo(images_warped_f[i], CV_32F);
+    LOG("image warp");
 
     // TODO 曝光补偿
     Ptr<ExposureCompensator> compensator = ExposureCompensator::createDefault(expos_comp_type);
@@ -391,6 +397,7 @@ Java_com_example_stitch_MainActivity_stitch_1e(
     }
 
     compensator->feed(corners, images_warped, masks_warped);
+    LOG("exposure compensate");
 
     // TODO 寻找接缝线,参考: https://blog.csdn.net/zhaocj/article/details/78944867
     Ptr<SeamFinder> seam_finder;
@@ -422,7 +429,7 @@ Java_com_example_stitch_MainActivity_stitch_1e(
         seam_finder = makePtr<detail::DpSeamFinder>(DpSeamFinder::COLOR_GRAD);
     if (!seam_finder)
     {
-        assert(0);
+        return -1;
     }
 
     seam_finder->find(images_warped_f, corners, masks_warped);
@@ -443,8 +450,6 @@ Java_com_example_stitch_MainActivity_stitch_1e(
 
     for (int img_idx = 0; img_idx < num_images; ++img_idx)
     {
-        LOGLN("Compositing image #" << indices[img_idx]+1);
-
         // Read image and resize it if necessary
         full_img = imread(img_names[img_idx]);// TODO 读取图片
         if (!is_compose_scale_set)
@@ -570,5 +575,7 @@ Java_com_example_stitch_MainActivity_stitch_1e(
 //    }
 
     *(Mat *)result_mat = result.clone();
+    LOG("finish stitch");
+    return 0;
 
 }

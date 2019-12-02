@@ -96,23 +96,41 @@ public class MainActivity extends AppCompatActivity {
     public void simpleTest() {
         String featuresType = (String) featuresList.getSelectedItem();
         String warpType = (String) warpList.getSelectedItem();
+        String[] imgPaths = new String[2];
+
+        for (int i = 0; i < 2; i ++) {
+            imgPaths[i] = appPath + "/boat" + (i + 1) + ".jpg";
+        }
+
         Mat matBGR = new Mat();
-        stitch_e(
+        int result = stitch_e(
+                imgPaths,
                 featuresType,
                 warpType,
                 matBGR.getNativeObjAddr()
         );
 
-        if (1 == 1) {
+        if (result != 0) {
+            infoLog("failed");
             return;
+        } else {
+            infoLog("mat size " + matBGR.cols() + ", " + matBGR.rows());
+            if (matBGR.cols() * matBGR.rows() == 0) {
+                return;
+            }
         }
 
         Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
 
-        // BGR转RGB
-        Mat matRGB = new Mat();
-        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
-        Utils.matToBitmap(matRGB, bitmap);
+        if (1 == 2) {
+            // BGR转RGB
+            Mat matRGB = new Mat();
+            Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
+            Utils.matToBitmap(matRGB, bitmap);
+        } else {
+            return;
+//            Utils.matToBitmap(matBGR, bitmap);
+        }
 
         // 显示图片
         ImageView imageView = findViewById(R.id.sample_img);
@@ -143,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
     // native 方法
 
-    public native void stitch_e(
+    public native int stitch_e(
+            String[] imgPaths,
             String featuresType,
             String wrapType,
             long result
