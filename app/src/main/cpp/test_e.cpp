@@ -24,10 +24,15 @@ JNIEXPORT void JNICALL
 Java_com_example_stitch_MainActivity_stitch_1e(
         JNIEnv *env,
         jobject thiz,
-        jstring featuresType) {
+        jstring featuresType,
+        jstring wrapType,
+        jlong result) {
     // 接收所有参数
     const char *features_type = env->GetStringUTFChars(featuresType, 0);
+    const char *wrap_type = env->GetStringUTFChars(wrapType, 0);
     LOG("features type: %s", features_type);
+
+    *(Mat *)result = nullptr;
 
 //    jsize str_len = env->GetArrayLength(imgPaths);
 //

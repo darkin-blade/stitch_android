@@ -12,12 +12,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
 import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
 public class MainActivity extends AppCompatActivity {
     static public int window_num;
@@ -25,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
     static public final int MAIN = 0;
 
-    Spinner featuresTypeList;
+    Spinner featuresList;
+    Spinner wrapList;
+    Spinner waveCorrectList;// 波形矫正
     Button button_1;
 
     // 初始化opencv java
@@ -65,12 +70,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initUI() {
-        featuresTypeList = findViewById(R.id.features_type);
+        // 按钮
         button_1 = findViewById(R.id.button_1);
 
-        String[] featuresTypeArray = new String[]{"orb", "akaze"};
-        ArrayAdapter<String> featuresTypeAdapter = new ArrayAdapter<String>(this, R.layout.spinner_1, featuresTypeArray);
-        featuresTypeList.setAdapter(featuresTypeAdapter);
+        // 下拉菜单
+        featuresList = findViewById(R.id.features_type);
+        wrapList = findViewById(R.id.wrap_type);
+
+        String[] tmpString = new String[]{"orb", "akaze"};
+        ArrayAdapter<String> tmpAdapter = new ArrayAdapter<String>(this, R.layout.spinner_1, tmpString);
+        featuresList.setAdapter(tmpAdapter);
+
+        tmpString = new String[]{"plane", "affine", "cylindrical", "spherical"};
+        tmpAdapter = new ArrayAdapter<>(this, R.layout.spinner_1, tmpString);
+        wrapList.setAdapter(tmpAdapter);
 
         button_1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +94,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void simpleTest() {
-        String featuresType = (String) featuresTypeList.getSelectedItem();
-        infoLog("features type: " + featuresType);
+        String featuresType = (String) featuresList.getSelectedItem();
+        String wrapType = (String) wrapList.getSelectedItem();
+        Mat matBGR = new Mat();
+        stitch_e(
+                featuresType,
+                wrapType,
+                matBGR.getNativeObjAddr()
+        );
+
+        Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
+
+        // BGR转RGB
+        Mat matRGB = new Mat();
+        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
+        Utils.matToBitmap(matRGB, bitmap);
+
+        // 显示图片
+        ImageView imageView = findViewById(R.id.sample_img);
+        imageView.setImageBitmap(bitmap);
     }
 
     public void midTest() {
@@ -109,7 +139,11 @@ public class MainActivity extends AppCompatActivity {
 
     // native 方法
 
-    public native void stitch_e(String featuresType);
+    public native void stitch_e(
+            String featuresType,
+            String wrapType,
+            long result
+    );
 
     // 不用的 native 方法
     public native void path2Bmp(String imgPath, Bitmap imgSend);

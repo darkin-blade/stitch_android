@@ -8,23 +8,43 @@
     android:orientation="vertical"
     android:background="@color/grey">
 
-
-    <Spinner
-        android:id="@+id/features_type"
-        style="@style/select_1"
-        android:background="@color/black">
-    </Spinner>
+    <TextView
+        style="@style/bar_1"
+        android:text="Stitch">
+    </TextView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/sample_img"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/bottom_1">
-        </ImageView>
+            android:layout_marginBottom="@dimen/bottom_1"
+            app:layout_constraintTop_toTopOf="parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/features_type"
+                    style="@style/select_1">
+                </Spinner>
+                <Spinner
+                    android:id="@+id/wrap_type"
+                    style="@style/select_1">
+                </Spinner>
+
+                <ImageView
+                    android:id="@+id/sample_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/bottom_1">
+                </ImageView>
+
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
