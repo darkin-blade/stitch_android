@@ -571,7 +571,8 @@ Java_com_example_stitch_MainActivity_stitch_1e(
         Mat result, result_mask;
         blender->blend(result, result_mask);
 
-        // imwrite(result_name, result);
+    // imwrite(result_name, result);
+    result.convertTo(result, (result.type() / 8) * 8);
 //    }
 
     *(Mat *)result_mat = result.clone();

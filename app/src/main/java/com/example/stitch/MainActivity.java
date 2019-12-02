@@ -122,15 +122,10 @@ public class MainActivity extends AppCompatActivity {
 
         Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
 
-        if (1 == 2) {
-            // BGR转RGB
-            Mat matRGB = new Mat();
-            Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
-            Utils.matToBitmap(matRGB, bitmap);
-        } else {
-            return;
-//            Utils.matToBitmap(matBGR, bitmap);
-        }
+        // BGR转RGB
+        Mat matRGB = new Mat();
+        Imgproc.cvtColor(matBGR, matRGB, Imgproc.COLOR_BGR2RGB);
+        Utils.matToBitmap(matRGB, bitmap);
 
         // 显示图片
         ImageView imageView = findViewById(R.id.sample_img);
