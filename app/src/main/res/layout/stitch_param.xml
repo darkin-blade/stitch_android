@@ -62,7 +62,7 @@
 
                 <Button
                     android:id="@+id/button_1"
-                    style="@style/button_5"
+                    style="@style/button_1"
                     android:text="Ok"/>
 
             </LinearLayout>
