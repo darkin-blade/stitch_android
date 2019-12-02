@@ -43,6 +43,15 @@
         <item name="android:background">@color/theme_black</item>
     </style>
 
+    <!--  下拉菜单  -->
+    <style name="select_1">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@color/grey</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+    </style>
+
     <!-- 分割线线 -->
     <style name="line">
         <item name="android:background">@color/grey_light</item>

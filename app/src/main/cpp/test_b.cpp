@@ -11,19 +11,32 @@
 #define LOG(format, ...) __android_log_print(ANDROID_LOG_INFO, "fuck", "[%s] " format, __func__, ## __VA_ARGS__)
 
 using namespace cv;
-using namespace detail;
 
-void mat2bmp(Mat src, jobject dest, JNIEnv *env) {
+// 测试字符串
+// 从path读取bmp
+
+extern "C" {
+JNIEXPORT void JNICALL
+Java_com_example_stitch_MainActivity_path2Bmp(
+        JNIEnv *env,
+        jobject thiz,
+        jstring imgPath,
+        jobject img_send) {
+    // 获取路径
+    const char* img_path = env->GetStringUTFChars(imgPath, 0);
+    LOG("%s\n", img_path);
+
+    Mat src = imread(img_path);
     AndroidBitmapInfo info;
     void *pixels = 0;
 
-    CV_Assert(AndroidBitmap_getInfo(env, dest, &info) >= 0);
+    CV_Assert(AndroidBitmap_getInfo(env, img_send, &info) >= 0);
     CV_Assert(info.format == ANDROID_BITMAP_FORMAT_RGBA_8888 ||
               info.format == ANDROID_BITMAP_FORMAT_RGB_565);
     CV_Assert(src.dims == 2 && info.height == (uint32_t) src.rows &&
               info.width == (uint32_t) src.cols);
     CV_Assert(src.type() == CV_8UC1 || src.type() == CV_8UC3 || src.type() == CV_8UC4);
-    CV_Assert(AndroidBitmap_lockPixels(env, dest, &pixels) >= 0);
+    CV_Assert(AndroidBitmap_lockPixels(env, img_send, &pixels) >= 0);
     CV_Assert(pixels);
 
     if (info.format == ANDROID_BITMAP_FORMAT_RGBA_8888) {
@@ -57,5 +70,23 @@ void mat2bmp(Mat src, jobject dest, JNIEnv *env) {
         }
     }
 
-    AndroidBitmap_unlockPixels(env, dest);
+    AndroidBitmap_unlockPixels(env, img_send);
+}
+
+JNIEXPORT void JNICALL
+Java_com_example_stitch_MainActivity_sendString(
+        JNIEnv *env,
+        jobject thiz,
+        jobjectArray imgPaths) {
+    // 获取String数组长度
+    jsize str_len = env->GetArrayLength(imgPaths);
+
+    for (int i = 0; i < str_len; i ++) {
+        jstring tmp = (jstring) env->GetObjectArrayElement(imgPaths, i);
+        const char *img_path = env->GetStringUTFChars(tmp, 0);
+
+        LOG("img[%d]: %s", i, img_path);
+    }
+}
+
 }

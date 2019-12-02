@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         infoLog("on create");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
 
         init();
     }
@@ -106,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // native 方法
-    public native String stringFromJNI();
-
     public native void path2Bmp(String imgPath, Bitmap imgSend);
 
     public native void sendString(String[] imgPaths);

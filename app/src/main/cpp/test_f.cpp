@@ -16,6 +16,9 @@ using namespace std;
 using namespace cv;
 using namespace cv::detail;
 
+// 特征点匹配
+// 绘制接缝线
+
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_stitch_MainActivity_findPoint(

@@ -45,9 +45,9 @@ add_library( # Sets the name of the library.
         SHARED
 
         # 自己写的cpp文件相对路径
-        lib_test.cpp
-        lib_img.cpp
-        stitch.cpp)
+        test_b.cpp
+        test_a.cpp
+        test_f.cpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
