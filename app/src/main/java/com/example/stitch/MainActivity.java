@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     static public final int MAIN = 0;
 
     Spinner featuresList;
-    Spinner wrapList;
+    Spinner warpList;
     Spinner waveCorrectList;// 波形矫正
     Button button_1;
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 下拉菜单
         featuresList = findViewById(R.id.features_type);
-        wrapList = findViewById(R.id.wrap_type);
+        warpList = findViewById(R.id.wrap_type);
 
         String[] tmpString = new String[]{"orb", "akaze"};
         ArrayAdapter<String> tmpAdapter = new ArrayAdapter<String>(this, R.layout.spinner_1, tmpString);
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         tmpString = new String[]{"plane", "affine", "cylindrical", "spherical"};
         tmpAdapter = new ArrayAdapter<>(this, R.layout.spinner_1, tmpString);
-        wrapList.setAdapter(tmpAdapter);
+        warpList.setAdapter(tmpAdapter);
 
         button_1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,13 +95,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void simpleTest() {
         String featuresType = (String) featuresList.getSelectedItem();
-        String wrapType = (String) wrapList.getSelectedItem();
+        String warpType = (String) warpList.getSelectedItem();
         Mat matBGR = new Mat();
         stitch_e(
                 featuresType,
-                wrapType,
+                warpType,
                 matBGR.getNativeObjAddr()
         );
+
+        if (1 == 1) {
+            return;
+        }
 
         Bitmap bitmap = Bitmap.createBitmap(matBGR.cols(), matBGR.rows(), Bitmap.Config.ARGB_8888);
 
