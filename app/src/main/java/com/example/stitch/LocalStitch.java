@@ -16,18 +16,21 @@ import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
-public class LocalRecognize extends DialogFragment {
+public class LocalStitch extends DialogFragment {
     static public String featuresType = "orb";
     static public String warpType = "spherical";
     static public String waveCorrectType = "horiz";
 
-    static public LocalRecognizeParam localRecognizeParam;
+    static public LocalStitchParam localStitchParam;
 
     // protected
     public View myView;
 
     Button button_1;
     Button button_2;
+    Button button_3;
+    Button button_4;
+    Button button_5;
 
     @Override
     public void show(FragmentManager fragmentManager, String tag) {
@@ -43,7 +46,7 @@ public class LocalRecognize extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.local_recognize, container);
+        myView = inflater.inflate(R.layout.local_stitch, container);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0x00000000));// 背景透明
 
         initData();
@@ -53,29 +56,54 @@ public class LocalRecognize extends DialogFragment {
     }
 
     public void initData() {
-        localRecognizeParam = new LocalRecognizeParam();
+        localStitchParam = new LocalStitchParam();
     }
 
     public void initUI() {
         button_1 = myView.findViewById(R.id.button_1);
         button_2 = myView.findViewById(R.id.button_2);
+        button_3 = myView.findViewById(R.id.button_3);
+        button_4 = myView.findViewById(R.id.button_4);
+        button_5 = myView.findViewById(R.id.button_5);
 
         button_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                simpleTest();
+                test1();
             }
         });
 
         button_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                localRecognizeParam.show(getFragmentManager(), "set params");
+                ;// TODO 文件浏览器
             }
         });
+
+        button_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                localStitchParam.show(getFragmentManager(), "set params");
+            }
+        });
+
+        button_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ;// TODO 删除
+            }
+        });
+
+        button_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
     }
 
-    public void simpleTest() {
+    public void test1() {
         String[] imgPaths = new String[2];
 
         for (int i = 0; i < 2; i ++) {

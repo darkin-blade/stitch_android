@@ -12,14 +12,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 
 public class MainActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
     static public int window_num;
@@ -29,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             LOCAL_RECOGNIZE = 1,
             LOCAL_RECOGNIZE_PARAM = 2;
 
-    static public LocalRecognize localRecognize;// 本地识别
+    static public LocalStitch localStitch;// 本地识别
 
     // protected
     Button btnLocalRecognize;
@@ -51,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.local_recognize);
+        setContentView(R.layout.main_activity);
 
         initApp();
         initUI();
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         // 初始化 dialog
         // 初始化 组件
-        localRecognize = new LocalRecognize();
+        localStitch = new LocalStitch();
     }
 
     public void initUI() {
@@ -80,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         btnLocalRecognize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                localRecognize.show(getSupportFragmentManager(), "local recognize");
+                localStitch.show(getSupportFragmentManager(), "local recognize");
             }
         });
     }

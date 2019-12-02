@@ -21,7 +21,7 @@
         <Button
             android:id="@+id/local_recognize"
             style="@style/item_1"
-            android:text="Local Recognize">
+            android:text="Local Stitch">
         </Button>
         <Button
             style="@style/item_2"

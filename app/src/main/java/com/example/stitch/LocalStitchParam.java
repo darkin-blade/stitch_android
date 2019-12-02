@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-public class LocalRecognizeParam extends DialogFragment {
+public class LocalStitchParam extends DialogFragment {
     public View myView;
 
     Button button_1;
@@ -84,9 +84,9 @@ public class LocalRecognizeParam extends DialogFragment {
             @Override
             public void onClick(View v) {
                 // 保存参数
-                MainActivity.localRecognize.featuresType = (String) featuresList.getSelectedItem();
-                MainActivity.localRecognize.warpType = (String) warpList.getSelectedItem();
-                MainActivity.localRecognize.waveCorrectType = (String) waveCorrectList.getSelectedItem();
+                MainActivity.localStitch.featuresType = (String) featuresList.getSelectedItem();
+                MainActivity.localStitch.warpType = (String) warpList.getSelectedItem();
+                MainActivity.localStitch.waveCorrectType = (String) waveCorrectList.getSelectedItem();
                 dismiss();
             }
         });

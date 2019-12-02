@@ -53,12 +53,30 @@
                     android:id="@+id/button_1"
                     style="@style/button_1"
                     android:layout_marginRight="2dp"
-                    android:text="Go"/>
+                    android:text="Work"/>
                 <Button
                     android:id="@+id/button_2"
+                    style="@style/button_5"
+                    android:layout_marginRight="2dp"
                     android:layout_marginLeft="2dp"
+                    android:text="Add"/>
+                <Button
+                    android:id="@+id/button_3"
                     style="@style/button_2"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginLeft="2dp"
                     android:text="Setting"/>
+                <Button
+                    android:id="@+id/button_4"
+                    style="@style/button_6"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginLeft="2dp"
+                    android:text="Delete"/>
+                <Button
+                    android:id="@+id/button_5"
+                    style="@style/button_7"
+                    android:layout_marginLeft="2dp"
+                    android:text="Back"/>
 
             </LinearLayout>
 
