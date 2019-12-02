@@ -1,4 +1,6 @@
 package com.example.stitch;
 
-public class ImageSelect {
+import com.example.stitch.interfaces.FileManager;
+
+public class ImageSelect extends FileManager {
 }
