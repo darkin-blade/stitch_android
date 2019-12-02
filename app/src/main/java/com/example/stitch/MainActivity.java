@@ -68,10 +68,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void simpleTest() {
-        // 字符串测试
-        TextView tv = findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
-
         // TODO 测试
     }
 
